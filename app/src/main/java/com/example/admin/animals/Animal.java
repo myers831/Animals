@@ -2,13 +2,14 @@ package com.example.admin.animals;
 
 import android.graphics.Bitmap;
 
+import java.io.Serializable;
 import java.sql.Blob;
 
 /**
  * Created by Admin on 10/3/2017.
  */
 
-public class Animal {
+public class Animal implements Serializable {
     String Name, Height, Weight;
     //Blob Image;
 

@@ -26,7 +26,7 @@ public class AnimalListAdapter extends ArrayAdapter<Animal> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = convertView;
         if(view==null){
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_list_item, null);
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_list_item_2, null);
         }
 
         TextView tvAnimalName = (TextView) view.findViewById(R.id.tvAnimalName);

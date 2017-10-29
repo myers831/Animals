@@ -19,7 +19,8 @@
         <activity android:name=".AnimalTypeActivity" />
         <activity android:name=".KanineActivity" />
         <activity android:name=".FelineActivity" />
-        <activity android:name=".RodentActivity"></activity>
+        <activity android:name=".RodentActivity" />
+        <activity android:name=".SingleAnimalActivity"></activity>
     </application>
 
 </manifest>

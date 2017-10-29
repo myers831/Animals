@@ -15,13 +15,14 @@ import java.util.List;
 
 public class RodentDatabaseHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 5;
     public static final String DATABASE_NAME = "Rodents.db";
 
     public static final String TABLE_NAME = "Rodent";
     public static final String COLUMN_NAME = "Name";
     public static final String COLUMN_HEIGHT = "Height";
     public static final String COLUMN_WEIGHT = "Weight";
+    public static final String ID = "id";
 
 
     public RodentDatabaseHelper(Context context) {
@@ -30,13 +31,13 @@ public class RodentDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + "(" + COLUMN_NAME + " TEXT PRIMARY KEY, " + COLUMN_HEIGHT + " TEXT, " + COLUMN_WEIGHT + " TEXT " + ")";
+        String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + "(" + ID + " INTEGER PRIMARY KEY, " + COLUMN_NAME + " TEXT, " + COLUMN_HEIGHT + " TEXT, " + COLUMN_WEIGHT + " TEXT " + ")";
         db.execSQL(CREATE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE ID EXISTS " + TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
 
@@ -50,6 +51,23 @@ public class RodentDatabaseHelper extends SQLiteOpenHelper {
         database.insert(TABLE_NAME, null, contentValues);
     }
 
+    public Animal getAnimal(int id){
+
+        Animal animal = null;
+
+        SQLiteDatabase database = this.getWritableDatabase();
+        String QUERY = "SELECT * from " + TABLE_NAME + " WHERE id=" + id;
+
+        Cursor cursor = database.rawQuery(QUERY, null);
+
+        if(cursor.moveToFirst()) {
+            do {
+                animal = new Animal(cursor.getString(1), cursor.getString(2), cursor.getString(3));
+            }while (cursor.moveToNext());
+        }
+        return animal;
+    }
+
     public List<Animal> getAnimalList(){
         List<Animal> animalList = new ArrayList<>();
 
@@ -60,7 +78,7 @@ public class RodentDatabaseHelper extends SQLiteOpenHelper {
 
         if(cursor.moveToFirst()){
             do{
-                Animal animal = new Animal(cursor.getString(0), cursor.getString(1), cursor.getString(2));
+                Animal animal = new Animal(cursor.getString(1), cursor.getString(2), cursor.getString(3));
                 animalList.add(animal);
             }while (cursor.moveToNext());
         }
